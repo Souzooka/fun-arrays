@@ -62,7 +62,21 @@ var sumOfBankBalances = bankBalances.reduce( (prev, cur) => {
     Delaware
   the result should be rounded to the nearest cent
  */
-var sumOfInterests = null;
+var sumOfInterests = bankBalances.filter((e) => {
+  switch (e.state) {
+    case "WI":
+    case "IL":
+    case "WY":
+    case "OH":
+    case "GA":
+    case "DE":
+      return true;
+    default:
+      return false;
+  }
+}).reduce((prev, cur) => {
+    return Math.round((prev + Number(cur.amount * 0.189)) * 100) / 100;
+  }, 0);
 
 /*
   set sumOfHighInterests to the sum of the 18.9% interest
