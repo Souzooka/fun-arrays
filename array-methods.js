@@ -6,7 +6,7 @@ var bankBalances = dataset.bankBalances;
   assign the resulting array to `hundredThousandairs`
 */
 var hundredThousandairs = bankBalances.filter((e) => {
-  return e.amount > 100000.00;
+  return Number(e.amount) > 100000.00;
 });
 
 /*
@@ -20,7 +20,13 @@ var hundredThousandairs = bankBalances.filter((e) => {
     }
   assign the resulting array to `roundedDollar`
 */
-var roundedDollar = null;
+var roundedDollar = bankBalances.map((e) => {
+  return {
+    "amount": e.amount,
+    "state": e.state,
+    "rounded": Math.round(Number(e.amount))
+  };
+});
 
 /*
   set a the `amount` value for each object in bankBalances
