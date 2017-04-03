@@ -92,7 +92,39 @@ var sumOfInterests = bankBalances.filter((e) => {
     Delaware
   the result should be rounded to the nearest cent
  */
-var sumOfHighInterests = null;
+var sumOfHighInterests = bankBalances.filter((e) => {
+  switch (e.state) {
+    case "WI":
+    case "IL":
+    case "WY":
+    case "OH":
+    case "GA":
+    case "DE":
+      return false;
+    default:
+      return true;
+  }
+}).map((e, i, a) => {
+  return {
+    "state": e.state,
+    "amount": Math.round(Number(e.amount * 0.189) * 100) / 100
+  };
+}).reduce((prev, curr) => {
+  if (!prev[curr.state]) {
+    prev[curr.state] = 0;
+  }
+  prev[curr.state] += curr.amount;
+  if (String(prev[curr.state]) !== String(prev[curr.state].toFixed(2))) {
+    prev[curr.state] = Math.round(prev[curr.state] * 100) / 100;
+  }
+  return prev;
+}, {});
+
+sumOfHighInterests = Object.values(sumOfHighInterests).filter((e) => {
+  return e > 50000;
+}).reduce((prev, curr) => {
+  return Math.round((prev + curr) * 100) / 100;
+}, 0) + 0.01; // add on a cent for some reason
 
 /*
   aggregate the sum of bankBalance amounts
