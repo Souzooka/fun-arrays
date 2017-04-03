@@ -164,7 +164,37 @@ var higherStateSums = null;
     Delaware
   false otherwise
  */
-var areStatesInHigherStateSum = null;
+var areStatesInHigherStateSum = bankBalances.filter((e) => {
+  switch (e.state) {
+    case "WI":
+    case "IL":
+    case "WY":
+    case "OH":
+    case "GA":
+    case "DE":
+      return true;
+    default:
+      return false;
+  }
+}).map((e, i, a) => {
+  return {
+    "state": e.state,
+    "amount": Number(e.amount * 0.189)
+  };
+}).reduce((prev, curr) => {
+  if (!prev[curr.state]) {
+    prev[curr.state] = 0;
+  }
+  prev[curr.state] += curr.amount;
+  if (String(prev[curr.state]) !== String(prev[curr.state].toFixed(2))) {
+    prev[curr.state] = Math.round(prev[curr.state] * 100) / 100;
+  }
+  return prev;
+}, {});
+
+areStatesInHigherStateSum = Object.values(areStatesInHigherStateSum).every((e) => {
+  return e > 2550000;
+});
 
 /*
   Stretch Goal && Final Boss
@@ -180,7 +210,37 @@ var areStatesInHigherStateSum = null;
     Delaware
   false otherwise
  */
-var anyStatesInHigherStateSum = null;
+var anyStatesInHigherStateSum = bankBalances.filter((e) => {
+  switch (e.state) {
+    case "WI":
+    case "IL":
+    case "WY":
+    case "OH":
+    case "GA":
+    case "DE":
+      return true;
+    default:
+      return false;
+  }
+}).map((e, i, a) => {
+  return {
+    "state": e.state,
+    "amount": Number(e.amount * 0.189)
+  };
+}).reduce((prev, curr) => {
+  if (!prev[curr.state]) {
+    prev[curr.state] = 0;
+  }
+  prev[curr.state] += curr.amount;
+  if (String(prev[curr.state]) !== String(prev[curr.state].toFixed(2))) {
+    prev[curr.state] = Math.round(prev[curr.state] * 100) / 100;
+  }
+  return prev;
+}, {});
+
+anyStatesInHigherStateSum = Object.values(anyStatesInHigherStateSum).some((e) => {
+  return e > 2550000;
+});
 
 
 module.exports = {
